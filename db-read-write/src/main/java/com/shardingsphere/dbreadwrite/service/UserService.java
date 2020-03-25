@@ -11,7 +11,7 @@ import java.util.List;
  **/
 public interface UserService {
 
-    void saveAll(List<User> userList);
+    void SaveUserInfo(List<User> userList);
 
-    List<User> findAll();
+    List<User> FindAllUserInfo();
 }

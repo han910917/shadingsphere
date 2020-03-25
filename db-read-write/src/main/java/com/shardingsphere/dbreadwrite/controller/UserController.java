@@ -15,13 +15,14 @@ import java.util.List;
  * @Time 2020/3/24 14:16
  **/
 @RestController
-public class TestController {
+@RequestMapping("/user")
+public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/test")
-    public Object Test(){
+    @RequestMapping("/saveUserInfo")
+    public Object SaveUserInfo(){
         List<User> userList = Lists.newArrayList();
         for (int i = 0; i < 100; i++) {
             User user = new User();
@@ -30,12 +31,12 @@ public class TestController {
             user.setAge(i == 0 ? 1 : i);
             userList.add(user);
         }
-        userService.saveAll(userList);
+        userService.SaveUserInfo(userList);
         return "成功";
     }
 
-    @RequestMapping("/read")
-    public Object Read(){
-        return userService.findAll();
+    @RequestMapping("/findAllUserInfo")
+    public Object FindAllUserInfo(){
+        return userService.FindAllUserInfo();
     }
 }
