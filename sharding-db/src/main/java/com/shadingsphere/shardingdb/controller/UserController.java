@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @Description
- * @Author hangaoming
+ * @Author hgm
  * @Time 2020/3/24 14:16
  **/
 @RestController
@@ -35,8 +35,27 @@ public class UserController {
         return "成功";
     }
 
+    /**
+     * 查询所有信息
+     * @author hgm
+     * @Time 2020/3/30 12:36
+     * @param 
+     * @return java.lang.Object
+     */
     @RequestMapping("/findAllUserInfo")
     public Object FindAllUserInfo(){
         return userService.FindAllUserInfo();
+    }
+
+    /**
+     * 查询前十信息
+     * @author hgm
+     * @Time 2020/3/30 12:36
+     * @param
+     * @return java.lang.Object
+     */
+    @RequestMapping("/findByIdTen")
+    public Object findByIdTen(Integer page, Integer rows){
+        return userService.findByIdTen( page, rows );
     }
 }

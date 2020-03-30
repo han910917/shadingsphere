@@ -7,7 +7,7 @@ import java.util.Collection;
 
 /**
  * @Description
- * @Author hangaoming
+ * @Author hgm
  * @Time 2020/3/26 13:28
  **/
 public class PreciseAlgorithmClassName implements PreciseShardingAlgorithm<Integer> {

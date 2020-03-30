@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @Description
- * @Author hangaoming
+ * @Author hgm
  * @Time 2020/3/24 15:22
  **/
 @Service
@@ -27,5 +27,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> FindAllUserInfo() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public Object findByIdTen(Integer page, Integer rows) {
+        Integer startRows = ( page >= 0 ? 1 : page - 1) * rows;
+        return userRepository.findUserById(startRows, rows);
     }
 }
