@@ -23,7 +23,7 @@ spring:
           sharding-column: id
           algorithm-expression: db$->{id%2}
       binding-tables: user # 绑定表规则列表
-      broadcast-tables: user # 广播表规则列表
+#      broadcast-tables: user # 广播表规则列表  加上之后插入的数据存在两个库中都存
       default-data-source-name: db0
       tables:
         user:
