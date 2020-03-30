@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 /**
  * @Description
- * @Author hangaoming
+ * @Author hgm
  * @Time 2020/3/24 14:58
  **/
 @Entity
