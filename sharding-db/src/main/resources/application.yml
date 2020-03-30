@@ -19,11 +19,14 @@ spring:
 
     sharding:
       default-database-strategy:
-        inline: # 行表达式分片策略
+        standard: # 标准分片策略
+          precise-algorithm-class-name: com.shadingsphere.shardingdb.shadingsphere.PreciseAlgorithmClassName # 自定义分片策略
           sharding-column: id
-          algorithm-expression: db$->{id%2}
+#       inline: # 行表达式分片策略
+#         sharding-column: id
+#         algorithm-expression: db$->{id%2}
       binding-tables: user # 绑定表规则列表
-#      broadcast-tables: user # 广播表规则列表  加上之后插入的数据存在两个库中都存
+#      broadcast-tables: user # 广播表规则列表 分片中都存在的表，数据不大但需要关联查询，如字典表
       default-data-source-name: db0
       tables:
         user:
