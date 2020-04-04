@@ -1,0 +1,37 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  shardingsphere:
+    datasource:
+      names: mdb,sdb
+      mdb:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/db2?characterEncoding=utf-8&serverTimezone=GMT&useSSL=true
+        username: root
+        password: root
+      sdb:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3307/db2?characterEncoding=utf-8&serverTimezone=GMT&useSSL=true
+        username: root
+        password: root
+    sharding:
+      tables:
+        user:
+          key-generator:
+            column: id
+            type: SNOWFLAKE
+          actual-data-nodes: ds.user$->{0..2}
+          table-strategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: user$->{id%3}
+      binding-tables: user
+      master-slave-rules:
+        ds:
+          master-data-source-name: mdb
+          slave-data-source-names: sdb
+    props:
+      sql:
+        show: true
