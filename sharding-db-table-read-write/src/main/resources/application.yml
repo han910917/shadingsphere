@@ -1,0 +1,58 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  shardingsphere:
+    datasource:
+      names: master0,master1,slave0,slave1
+      master0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/db3?characterEncoding=utf-8&serverTimezone=GMT&useSSL=true
+        username: root
+        password: root
+      master1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/db4?characterEncoding=utf-8&serverTimezone=GMT&useSSL=true
+        username: root
+        password: root
+      slave0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3307/db3?characterEncoding=utf-8&serverTimezone=GMT&useSSL=true
+        username: root
+        password: root
+      slave1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3307/db4?characterEncoding=utf-8&serverTimezone=GMT&useSSL=true
+        username: root
+        password: root
+    sharding:
+      default-database-strategy:
+        inline:
+          sharding-column: id
+          algorithm-expression: ds$->{id%2}
+      tables:
+        user:
+          actual-data-nodes: ds$->{0..1}.user$->{0..2}
+          key-generator:
+            column: id
+            type: SNOWFLAKE
+          table-strategy:
+            inline:
+              algorithm-expression: db$->{id%2+3}.user$->{id%3}
+              sharding-column: id
+      master-slave-rules:
+        ds0:
+          masterDataSourceName: master0
+          slaveDataSourceNames: slave0
+          loadBalanceAlgorithmType: ROUND_ROBIN
+        ds1:
+          masterDataSourceName: master1
+          slaveDataSourceNames: slave1
+          loadBalanceAlgorithmType: ROUND_ROBIN
+      binding-tables: user
+    props:
+      sql:
+        show: true
