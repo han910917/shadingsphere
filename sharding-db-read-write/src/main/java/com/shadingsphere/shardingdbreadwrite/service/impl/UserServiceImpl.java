@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Object findByIdTen(Integer page, Integer rows) {
-        Integer startRows = ( page >= 0 ? 1 : page - 1) * rows;
+        Integer startRows = ( page <= 0 ? 0 : page - 1 ) * rows;
         return userRepository.findUserById(startRows, rows);
     }
 }
